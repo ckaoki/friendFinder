@@ -1,14 +1,17 @@
-var express = require('express')
-var router = express.Router()
+var express = require('express');
+var friends = require('../data/friends');
+var router = express.Router();
+router.use(express.urlencoded({ extended: true }));
+router.use(express.json());
 
 router.get("/friends", function(req, res) {
-    // res.sendFile(path.join(__dirname, "home.html"));
-    res.send('api friends');
+    res.send(friends);
 });
   
-router.get("/friendsPost", function(req, res) {
-    // res.sendFile(path.join(__dirname, "survey.html"));
-    res.send('api post')
+
+router.post("/friends", function(req, res) {
+    friends.push(req.body);
+    res.json(true);
 });
 
 module.exports = router;
