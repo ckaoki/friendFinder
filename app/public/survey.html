@@ -18,6 +18,7 @@
   </head>
   <body>
     
+    <!-- Survey -->
     <div class="container" style="background-color:lightsteelblue; border-radius:10px; padding:10px; margin-top: 10px; margin-bottom:20px">
         <h2>Survey Questions</h2>
         <hr>
@@ -144,75 +145,43 @@
             <button type="submit" class="btn btn-primary btn-block" id="submit">Submit</button>
         </form>
     </div>
+
+    <!-- links -->
+    <div class="container"  style="padding-left:30px; padding-top:0">
+        <p><a href="/api/friends" target="_blank">API Friends List</a> | <a href="https://github.com/ckaoki/friendFinder" target="_blank">GitHub Repo</a></p>
+    </div>
+
+    <!-- Modal -->
+    <div id="results-modal" class="modal fade" role="dialog">
+      <div class="modal-dialog">  
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header text-center">
+            <h2 class="modal-title" style="margin-left: 150px"><strong>Best Match</strong></h2>
+            <button type="button" class="close" style="margin-left:100px" data-dismiss="modal">×</button>
+          </div>
+          <div class="modal-body text-center">
+            <h2 id="match-name"></h2>
+            <img id="match-img" src="https://media.licdn.com/mpr/mpr/shrinknp_400_400/p/6/005/064/1bd/3435aa3.jpg" alt="">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+  
+      </div>
+    </div>
+
     
     <!-- JavaScript -->
+    <script type="text/javascript" src="javascript/survey.js"></script>
+
+    <!-- Chosen CSS -->
     <script type="text/javascript">
-        // Chosen CSS
         $(".chosen-select").chosen( {
             allow_single_deselect: true, disable_search_threshold: 6, width:"200px"     
         });
-
-        // Capture the form inputs
-        $("#submit").on("click", function(event) {
-          event.preventDefault();
-          console.log('submit');
-    
-          // Form validation. Everything is filled in.
-          function validateForm() {
-            var isValid = true;
-            $(".form-control").each(function() {
-              if ($(this).val() === "") {
-                isValid = false;
-              }
-            });
-    
-            $(".chosen-select").each(function() {
-    
-              if ($(this).val() === "") {
-                isValid = false;
-              }
-            });
-            return isValid;
-          }
-    
-          // If all required fields are filled
-          if (validateForm()) {
-            // Create an object for the user"s data
-            var userData = {
-              name: $("#name").val(),
-              photo: $("#photo").val(),
-              scores: [
-                $("#q1").val(),
-                $("#q2").val(),
-                $("#q3").val(),
-                $("#q4").val(),
-                $("#q5").val(),
-                $("#q6").val(),
-                $("#q7").val(),
-                $("#q8").val(),
-                $("#q9").val(),
-                $("#q10").val()
-              ]
-            };
-    
-            // AJAX post the data to the friends API.
-            $.post("api/friends", userData, function(data) {
-    
-            //   // Grab the result from the AJAX post so that the best match's name and photo are displayed.
-            //   $("#match-name").text(data.name);
-            //   $("#match-img").attr("src", data.photo);
-    
-            //   // Show the modal with the best match
-            //   $("#results-modal").modal("toggle");
-                console.log(userData);
-    
-            });
-          } else {
-            alert("Please fill out all fields before submitting!");
-          }
-        });
-      </script>
-
+    </script>    
 
 </body>
 </html>
